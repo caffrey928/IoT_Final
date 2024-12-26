@@ -1,0 +1,5 @@
+streamlit  # Use your installed version
+networkx
+pyvis
+matplotlib
+plotly

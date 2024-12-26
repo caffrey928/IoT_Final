@@ -1,0 +1,676 @@
+[
+    {
+        "id": "1c615df3d44253db",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "19dc5f7448e933c4",
+        "type": "serial in",
+        "z": "1c615df3d44253db",
+        "name": "",
+        "serial": "7487160fb0f9e963",
+        "x": 110,
+        "y": 60,
+        "wires": [
+            [
+                "5a0134387ca72cb2"
+            ]
+        ]
+    },
+    {
+        "id": "5a0134387ca72cb2",
+        "type": "function",
+        "z": "1c615df3d44253db",
+        "name": "function 4",
+        "func": "let match = msg.payload.match(/Dust Density: (-?\\d+(\\.\\d+)?) ug\\/m3/)\nmsg.payload = -parseFloat(match[1])\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 260,
+        "y": 120,
+        "wires": [
+            [
+                "2d0e9c81a5367918",
+                "b538ab167b777fde"
+            ]
+        ]
+    },
+    {
+        "id": "2d0e9c81a5367918",
+        "type": "ui_gauge",
+        "z": "1c615df3d44253db",
+        "name": "",
+        "group": "cef4704330ed452c",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "PM2.5",
+        "label": "ug/m^3",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "3000",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "300",
+        "seg2": "1050",
+        "diff": false,
+        "className": "",
+        "x": 410,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "7e0704b682928997",
+        "type": "ui_gauge",
+        "z": "1c615df3d44253db",
+        "name": "",
+        "group": "a0d19510386ecda1",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temperature",
+        "label": "C",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "50",
+        "colors": [
+            "#0038e0",
+            "#00b500",
+            "#ca3838"
+        ],
+        "seg1": "12",
+        "seg2": "33",
+        "diff": false,
+        "className": "",
+        "x": 430,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "44ebae8181b7e7c6",
+        "type": "ui_gauge",
+        "z": "1c615df3d44253db",
+        "name": "",
+        "group": "a0d19510386ecda1",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Humidity",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00fbff",
+            "#0400e6",
+            "#363ab5"
+        ],
+        "seg1": "25",
+        "seg2": "75",
+        "diff": false,
+        "className": "",
+        "x": 440,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "8e260d7a2585f2df",
+        "type": "inject",
+        "z": "1c615df3d44253db",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 90,
+        "y": 240,
+        "wires": [
+            [
+                "887a6c649fa5d7ff"
+            ]
+        ]
+    },
+    {
+        "id": "887a6c649fa5d7ff",
+        "type": "pythonshell in",
+        "z": "1c615df3d44253db",
+        "name": "dht22",
+        "pyfile": "/home/kanchan/Documents/dht22/dht22.py",
+        "virtualenv": "/home/kanchan/Documents/dht22/.venv",
+        "continuous": true,
+        "stdInData": true,
+        "x": 230,
+        "y": 280,
+        "wires": [
+            [
+                "380d462317eb73b1",
+                "45fc8d23d1d37f14"
+            ]
+        ]
+    },
+    {
+        "id": "380d462317eb73b1",
+        "type": "function",
+        "z": "1c615df3d44253db",
+        "name": "function 5",
+        "func": "msg.payload = msg.payload.split(\" \")[0]\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 200,
+        "wires": [
+            [
+                "7e0704b682928997",
+                "74d9dfdba6e570c4"
+            ]
+        ]
+    },
+    {
+        "id": "45fc8d23d1d37f14",
+        "type": "function",
+        "z": "1c615df3d44253db",
+        "name": "function 6",
+        "func": "msg.payload = msg.payload.split(\" \")[1]\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 360,
+        "wires": [
+            [
+                "44ebae8181b7e7c6",
+                "3324a2873382ea02"
+            ]
+        ]
+    },
+    {
+        "id": "88423494ceefd630",
+        "type": "inject",
+        "z": "1c615df3d44253db",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1.1",
+        "topic": "",
+        "x": 90,
+        "y": 460,
+        "wires": [
+            [
+                "1f9915e84bd3dcd6"
+            ]
+        ]
+    },
+    {
+        "id": "1f9915e84bd3dcd6",
+        "type": "pythonshell in",
+        "z": "1c615df3d44253db",
+        "name": "hx711",
+        "pyfile": "/home/kanchan/Documents/hx711/hx711py/example.py",
+        "virtualenv": "/home/kanchan/Documents/hx711/hx711py/.venv",
+        "continuous": true,
+        "stdInData": true,
+        "x": 230,
+        "y": 460,
+        "wires": [
+            [
+                "77295d3dfbb12a6f",
+                "5ff97f4781235cab"
+            ]
+        ]
+    },
+    {
+        "id": "77295d3dfbb12a6f",
+        "type": "ui_gauge",
+        "z": "1c615df3d44253db",
+        "name": "",
+        "group": "cef4704330ed452c",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Weight",
+        "label": "g",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "5000",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 390,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "1fe87dc3c304a8d0",
+        "type": "inject",
+        "z": "1c615df3d44253db",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "2.1",
+        "topic": "",
+        "x": 90,
+        "y": 560,
+        "wires": [
+            [
+                "037c3ad1c5e085e2"
+            ]
+        ]
+    },
+    {
+        "id": "037c3ad1c5e085e2",
+        "type": "pythonshell in",
+        "z": "1c615df3d44253db",
+        "name": "RFID",
+        "pyfile": "/home/kanchan/Documents/pi-rfid/read.py",
+        "virtualenv": "/home/kanchan/Documents/pi-rfid/.venv",
+        "continuous": true,
+        "stdInData": true,
+        "x": 230,
+        "y": 580,
+        "wires": [
+            [
+                "9c3caf3b700b1010",
+                "8575cf96162b02dd"
+            ]
+        ]
+    },
+    {
+        "id": "1b82c57205bfba6b",
+        "type": "ui_text",
+        "z": "1c615df3d44253db",
+        "group": "cef4704330ed452c",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Pig ID:",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 390,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "2e7b09d2362f5a05",
+        "type": "ui_text",
+        "z": "1c615df3d44253db",
+        "group": "a0d19510386ecda1",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": " ",
+        "format": " ",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 70,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "b538ab167b777fde",
+        "type": "function",
+        "z": "1c615df3d44253db",
+        "name": "function 7",
+        "func": "msg.topic = \"PM2.5\"\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 100,
+        "wires": [
+            [
+                "64a7ac115c5e9e00"
+            ]
+        ]
+    },
+    {
+        "id": "74d9dfdba6e570c4",
+        "type": "function",
+        "z": "1c615df3d44253db",
+        "name": "function 8",
+        "func": "msg.topic = \"temperature\"\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 180,
+        "wires": [
+            [
+                "64a7ac115c5e9e00"
+            ]
+        ]
+    },
+    {
+        "id": "3324a2873382ea02",
+        "type": "function",
+        "z": "1c615df3d44253db",
+        "name": "function 9",
+        "func": "msg.topic = \"humidity\"\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 360,
+        "wires": [
+            [
+                "64a7ac115c5e9e00"
+            ]
+        ]
+    },
+    {
+        "id": "cfed6f25024617db",
+        "type": "debug",
+        "z": "1c615df3d44253db",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1000,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "64a7ac115c5e9e00",
+        "type": "function",
+        "z": "1c615df3d44253db",
+        "name": "function 10",
+        "func": "context.data = context.data || {};\nswitch(msg.topic){\n    case \"PM2.5\":\n        context.data.pm25 = msg.payload;\n        msg=null;\n        break;\n    case \"humidity\":\n        context.data.humidity = msg.payload;\n        msg = null;\n        break;\n    case \"temperature\":\n        context.data.temperature = msg.payload;\n        msg = null;\n        break;\n    default:\n        msg = null;\n        break;\n}\nif(context.data.pm25 != null && context.data.humidity != null && context.data.temperature !=null){\n    var data = `${context.data.temperature} ${context.data.humidity} ${context.data.pm25}`;\n    return {payload: data}\n} else return msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 280,
+        "wires": [
+            [
+                "2d311824d1d0ac9e"
+            ]
+        ]
+    },
+    {
+        "id": "2d311824d1d0ac9e",
+        "type": "delay",
+        "z": "1c615df3d44253db",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "30",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 840,
+        "y": 340,
+        "wires": [
+            [
+                "cfed6f25024617db",
+                "b7cb7108adc6eb4b"
+            ]
+        ]
+    },
+    {
+        "id": "9c3caf3b700b1010",
+        "type": "trigger",
+        "z": "1c615df3d44253db",
+        "name": "",
+        "op1": "",
+        "op2": " ",
+        "op1type": "pay",
+        "op2type": "str",
+        "duration": "10",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 290,
+        "y": 700,
+        "wires": [
+            [
+                "1b82c57205bfba6b"
+            ]
+        ]
+    },
+    {
+        "id": "8575cf96162b02dd",
+        "type": "delay",
+        "z": "1c615df3d44253db",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "10",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 380,
+        "y": 540,
+        "wires": [
+            [
+                "2f7a7fc92e0af861"
+            ]
+        ]
+    },
+    {
+        "id": "5ff97f4781235cab",
+        "type": "function",
+        "z": "1c615df3d44253db",
+        "name": "function 11",
+        "func": "msg.topic = \"weight\"\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 480,
+        "wires": [
+            [
+                "a620eec1ad979cb1"
+            ]
+        ]
+    },
+    {
+        "id": "2f7a7fc92e0af861",
+        "type": "function",
+        "z": "1c615df3d44253db",
+        "name": "function 12",
+        "func": "msg.topic=\"RFID\"\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 540,
+        "wires": [
+            [
+                "a620eec1ad979cb1"
+            ]
+        ]
+    },
+    {
+        "id": "a620eec1ad979cb1",
+        "type": "function",
+        "z": "1c615df3d44253db",
+        "name": "function 13",
+        "func": "context.data = context.data || {};\nswitch(msg.topic){\n    case \"weight\":\n        context.data.weight = msg.payload;\n        msg=null;\n        break;\n    case \"RFID\":\n        context.data.RFID = msg.payload;\n        msg = null;\n        break;\n    default:\n        msg = null;\n        break;\n}\nif(context.data.weight != null && context.data.RFID !=null){\n    var data = `${context.data.RFID} ${context.data.weight}`;\n    context.data.RFID = null;\n    return {payload: data}\n} else return msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 480,
+        "wires": [
+            [
+                "4586d8f5bbcb52ae",
+                "3fca181bfc107a7f"
+            ]
+        ]
+    },
+    {
+        "id": "3fca181bfc107a7f",
+        "type": "debug",
+        "z": "1c615df3d44253db",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 900,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "b7cb7108adc6eb4b",
+        "type": "pythonshell in",
+        "z": "1c615df3d44253db",
+        "name": "sensor to BC",
+        "pyfile": "/home/kanchan/Documents/client/client_1.py",
+        "virtualenv": "/home/kanchan/Documents/client/.venv",
+        "continuous": false,
+        "stdInData": false,
+        "x": 950,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4586d8f5bbcb52ae",
+        "type": "pythonshell in",
+        "z": "1c615df3d44253db",
+        "name": "pig to BC",
+        "pyfile": "/home/kanchan/Documents/client/client_2.py",
+        "virtualenv": "/home/kanchan/Documents/client/.venv",
+        "continuous": false,
+        "stdInData": false,
+        "x": 860,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7487160fb0f9e963",
+        "type": "serial-port",
+        "name": "",
+        "serialport": "/dev/ttyACM0",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "cef4704330ed452c",
+        "type": "ui_group",
+        "name": "Group 2",
+        "tab": "4ac704aa6b8bdf81",
+        "order": 2,
+        "disp": true,
+        "width": 6
+    },
+    {
+        "id": "a0d19510386ecda1",
+        "type": "ui_group",
+        "name": "Group 1",
+        "tab": "4ac704aa6b8bdf81",
+        "order": 1,
+        "disp": true,
+        "width": 6
+    },
+    {
+        "id": "4ac704aa6b8bdf81",
+        "type": "ui_tab",
+        "name": "Tab 1",
+        "icon": "dashboard",
+        "order": 1
+    }
+]
